@@ -43,17 +43,34 @@ public class LinkedHashMap<K, V> {
 			MapNode<K, V> myMapNode = new MapNode<>(key, value);
 			this.myBucketArray.set(index, myLinkedList);
 		}
-		MapNode<K, V> foundKey = (MapNode<K, V>) myLinkedList.search(key);
-		if (foundKey == null) {
-			foundKey = new MapNode<>(key, value);
-			myLinkedList.append(foundKey);
+		MapNode<K, V> myMapNode = (MapNode<K, V>) myLinkedList.search(key);
+		if (myMapNode == null) {
+			myMapNode = new MapNode<>(key, value);
+			myLinkedList.append(myMapNode);
 		} else {
-			foundKey.setValue(value);
+			myMapNode.setValue(value);
 		}
 	}
 
 	@Override
 	public String toString() {
 		return "LinkedHashMap List {" + myBucketArray + "}";
+	}
+
+	// To remove a node
+	public MapNode remove(K key) {
+		int index = this.getBucketIndex(key);
+		LinkedList<K, V> myLinkedList = this.myBucketArray.get(index);
+		if (myLinkedList == null) {
+			return null;
+		} else {
+			MapNode<K, V> myMapNode = (MapNode<K, V>) myLinkedList.search(key);
+			if (myMapNode == null) {
+				return null;
+			} else {
+				myLinkedList.delete(myMapNode);
+				return myMapNode;
+			}
+		}
 	}
 }

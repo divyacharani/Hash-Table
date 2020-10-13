@@ -39,4 +39,28 @@ public class LinkedList<K, V> {
 		return "LinkedList {" + head + "}";
 	}
 
+	// Delete a node
+	public void delete(INode node) {
+		if (node.equals(this.head)) {
+			INode tempNode = this.head;
+			this.head = head.getNext();
+		}
+		if (node.equals(this.tail)) {
+			INode tempNode = head;
+			while (tempNode.getNext().getNext() != null) {
+				tempNode = tempNode.getNext();
+			}
+			this.tail = tempNode;
+			tempNode.setNext(null);
+		} else {
+			INode tempNode = head;
+			while (tempNode.getNext() != node) {
+				tempNode = tempNode.getNext();
+			}
+			tempNode.setNext(node.getNext());
+			node.setNext(null);
+		}
+
+	}
+
 }
